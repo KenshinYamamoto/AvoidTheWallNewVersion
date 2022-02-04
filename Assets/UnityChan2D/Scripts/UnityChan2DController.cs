@@ -74,7 +74,6 @@ public class UnityChan2DController : MonoBehaviour
 
         if (jump)
         {
-            int dice = Random.Range(0, 2);
             m_animator.SetTrigger("Jump");
             m_rigidbody2D.AddForce(Vector2.up * jumpPower);
             SoundManager.soundManager.PlaySE(SoundManager.SE.Jump1);
@@ -142,7 +141,7 @@ public class UnityChan2DController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Block"))
+        if (collision.gameObject.CompareTag("Block") || collision.gameObject.CompareTag("Ground"))
         {
             SoundManager.soundManager.PlaySE(SoundManager.SE.Damage);
         }

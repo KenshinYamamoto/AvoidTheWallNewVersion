@@ -7,6 +7,7 @@ TagManager:
   - DamageObject
   - Coin
   - Block
+  - Ground
   layers:
   - Default
   - TransparentFX
