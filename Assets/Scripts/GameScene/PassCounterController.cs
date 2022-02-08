@@ -6,6 +6,6 @@ public class PassCounterController : MonoBehaviour
 {
     private void OnTriggerExit2D(Collider2D collision)
     {
-        GameController.gameController.UpdateCounter();
+        GameController.gameController.UpdateCounter(1);
     }
 }

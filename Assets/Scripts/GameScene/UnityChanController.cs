@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// UnityÇøÇ·ÇÒÇä«óùÇ∑ÇÈ
+
 public class UnityChanController : MonoBehaviour
 {
     public float jumpPower = 600f;
@@ -45,7 +47,7 @@ public class UnityChanController : MonoBehaviour
     {
         SoundManager.soundManager.PlaySE(SoundManager.SE.Finish);
 
-        StartCoroutine(ToTitle());
+        Invoke("ToTitle", 2.5f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -74,7 +76,7 @@ public class UnityChanController : MonoBehaviour
             gamePlay = false;
             animator.SetTrigger("Damage");
             SoundManager.soundManager.PlaySE(SoundManager.SE.Damage);
-            SoundManager.soundManager.StopBGM();
+            SoundManager.soundManager.PauseBGM();
 
             Invoke("Finish", 1f);
         }
@@ -85,9 +87,8 @@ public class UnityChanController : MonoBehaviour
         return gamePlay;
     }
 
-    IEnumerator ToTitle()
+    void ToTitle()
     {
-        yield return new WaitForSeconds(2.5f);
         GameController.gameController.ToTitle();
     }
 }

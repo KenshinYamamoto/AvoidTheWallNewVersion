@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// ÉTÉEÉìÉhä÷åWÇä«óùÇ∑ÇÈ
+
 public class SoundManager : MonoBehaviour
 {
     [SerializeField] AudioSource BGMAudioSource;
@@ -35,10 +37,12 @@ public class SoundManager : MonoBehaviour
     public bool playBGM;
     public bool playSE;
 
+    GameObject titleController;
+
     public static SoundManager soundManager;
     private void Awake()
     {
-        if(soundManager == null)
+        if (soundManager == null)
         {
             soundManager = this;
             DontDestroyOnLoad(this);
@@ -52,6 +56,37 @@ public class SoundManager : MonoBehaviour
     private void Start()
     {
         playBGM = true;
+        playSE = true;
+
+        SearchObject();
+    }
+
+    private void Update()
+    {
+        if (!CheckIsExists())
+        {
+            return;
+        }
+
+        if (TitleController.titleController.MuteBGMFlag())
+        {
+            playBGM = false;
+            PauseBGM();
+        }
+        else
+        {
+            playBGM = true;
+            UnPauseBGM();
+        }
+
+        if (TitleController.titleController.MuteSEFlag())
+        {
+            playSE = false;
+        }
+        else
+        {
+            playSE = true;
+        }
     }
 
     public void PlayBGM(BGM bgm)
@@ -68,12 +103,40 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySE(SE se)
     {
+        if (!playSE)
+        {
+            return;
+        }
+
         int index = (int)se;
         SEAudioSource.PlayOneShot(SEAudioClips[index]);
     }
 
-    public void StopBGM()
+    public void PauseBGM()
     {
-        BGMAudioSource.Stop();
+        BGMAudioSource.Pause();
+    }
+
+    public void UnPauseBGM()
+    {
+        BGMAudioSource.UnPause();
+    }
+
+    public bool CheckIsExists()
+    {
+        if (titleController)
+        {
+            return true;
+        }
+
+        else
+        {
+            return false;
+        }
+    }
+
+    public void SearchObject()
+    {
+        titleController = GameObject.Find("TitleController");
     }
 }

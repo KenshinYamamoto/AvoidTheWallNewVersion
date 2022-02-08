@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+// ƒQ[ƒ€ƒV[ƒ“‚ğŠÇ—‚·‚é
+
 public class GameController : MonoBehaviour
 {
     [SceneName] public string nextScene;
@@ -24,6 +26,11 @@ public class GameController : MonoBehaviour
     {        
         unityChan.rb2D.gravityScale = 0;
         SoundManager.soundManager.PlayBGM(SoundManager.BGM.Game);
+        Invoke("CountDownStart", 0.3f);
+    }
+
+    void CountDownStart()
+    {
         StartCoroutine(CountDown());
     }
 
@@ -59,9 +66,9 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene(nextScene);
     }
 
-    public void UpdateCounter()
+    public void UpdateCounter(int addScore)
     {
-        counter++;
+        counter += addScore;
         PassCounterText.text = "Score : " + counter;
     }
 }
